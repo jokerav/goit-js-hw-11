@@ -1,6 +1,7 @@
+import axios from 'axios';
 import './sass/main.scss';
 
-function fetchImages(q) {
+function getImages(q) {
   const SETTINGS = {
     URL: 'https://pixabay.com/api/',
     KEY: '25937561-4be56ebc67dabae3f5d5abc9c',
@@ -10,11 +11,6 @@ function fetchImages(q) {
   };
   const { URL, KEY, image_type, orientation, safesearch } = SETTINGS;
   const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}`;
-  fetch(searchRequest).then(response => {
-    if (!response.ok) {
-      throw new Error(response.message);
-    }
-    return response.json();
-  });
+  axios.get(searchRequest).then(response => response.data);
 }
-fetchImages('dog');
+getImages('dog');

@@ -25,3 +25,13 @@
   background-size: cover;
   background-position: center;
 }
+.input-container {
+  min-height: 80px;
+  background-color: skyblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input-search {
+  min-height: 50px;
+}

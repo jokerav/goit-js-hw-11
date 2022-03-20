@@ -13,4 +13,4 @@ function getImages(q) {
   const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}`;
   axios.get(searchRequest).then(response => response.data);
 }
-getImages('dog');
+getImages('dog').then();

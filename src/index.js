@@ -14,6 +14,12 @@ async function getImages(q) {
   };
   const { URL, KEY, image_type, orientation, safesearch } = SETTINGS;
   const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}`;
-  axios.get(searchRequest).then(response => response.data);
+
+  try {
+    const response = await axios.get(searchRequest);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
 }
-getImages('dog').then(Notiflix.Notify.success('Success!'));
+getImages('dog').then(res => console.log(res));

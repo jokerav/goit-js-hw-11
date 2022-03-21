@@ -17,9 +17,15 @@ async function getImages(q) {
 
   try {
     const response = await axios.get(searchRequest);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error(error);
+    return error;
   }
 }
-getImages('dog').then(res => console.log(res));
+getImages('djyty').then(response => {
+  if (response.total === 0) {
+    Notiflix.Notify.warning(
+      'Sorry, there are no images matching your search query. Please try again.',
+    );
+  }
+});

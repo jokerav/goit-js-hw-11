@@ -22,10 +22,18 @@ async function getImages(q) {
     return error;
   }
 }
-getImages('djyty').then(response => {
+getImages('dog').then(response => {
   if (response.total === 0) {
     Notiflix.Notify.warning(
       'Sorry, there are no images matching your search query. Please try again.',
     );
-  }
+  } else createPictureMarkup(response);
 });
+
+function createPictureMarkup(res) {
+  console.log(res.hits.[0]);
+  for (const i of res.hits) {
+    console.log(i);
+  }
+
+}

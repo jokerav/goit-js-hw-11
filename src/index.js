@@ -3,6 +3,7 @@ import Notiflix from 'notiflix';
 import './sass/main.scss';
 const searchInput = document.querySelector('[name=searchQuery]');
 const btnInput = document.querySelector('.input-btn');
+const gallery = document.querySelector('.gallery');
 
 async function getImages(q) {
   const SETTINGS = {
@@ -19,10 +20,10 @@ async function getImages(q) {
     const response = await axios.get(searchRequest);
     return response.data;
   } catch (error) {
-    return error;
+    return error.status;
   }
 }
-getImages('dog').then(response => {
+getImages('ship').then(response => {
   if (response.total === 0) {
     Notiflix.Notify.warning(
       'Sorry, there are no images matching your search query. Please try again.',
@@ -32,8 +33,26 @@ getImages('dog').then(response => {
 
 function createPictureMarkup(res) {
   console.log(res.hits.[0]);
-  for (const i of res.hits) {
-    console.log(i);
-  }
-
+  res.hits.map(pic => {
+    gallery.insertAdjacentHTML(
+      "beforeend",
+      `<div class="photo-card">
+  <img src="${pic.webformatURL}" alt="${pic.tags}" loading="lazy" />
+  <div class="info">
+    <p class="info-item">
+      <b>Likes ${pic.likes}</b>
+    </p>
+    <p class="info-item">
+      <b>Views ${pic.views}</b>
+    </p>
+    <p class="info-item">
+      <b>Comments ${pic.comments}</b>
+    </p>
+    <p class="info-item">
+      <b>Downloads ${pic.downloads}</b>
+    </p>
+  </div>
+</div>`
+    )
+  });
 }

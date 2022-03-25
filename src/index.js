@@ -28,9 +28,10 @@ async function getImages(q) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: 'true',
+    per_page: 40,
   };
-  const { URL, KEY, image_type, orientation, safesearch } = SETTINGS;
-  const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}`;
+  const { URL, KEY, image_type, orientation, safesearch, per_page } = SETTINGS;
+  const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}&per_page=${per_page}`;
 
   try {
     const response = await axios.get(searchRequest);

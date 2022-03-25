@@ -1,9 +1,25 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
 import './sass/main.scss';
+const form = document.querySelector('#search-form');
 const searchInput = document.querySelector('[name=searchQuery]');
-const btnInput = document.querySelector('.input-btn');
+const btnSearch = document.querySelector('.input-btn');
 const gallery = document.querySelector('.gallery');
+
+form.addEventListener('submit', onSearchPress);
+function onSearchPress(e) {
+  e.preventDefault();
+  const userInput = searchInput.value;
+  getImages(userInput).then(res => createPictureMarkup(res));
+}
+
+// getImages('ship').then(response => {
+//   if (response.total === 0) {
+//     Notiflix.Notify.warning(
+//       'Sorry, there are no images matching your search query. Please try again.',
+//     );
+//   } else createPictureMarkup(response);
+// });
 
 async function getImages(q) {
   const SETTINGS = {
@@ -23,19 +39,11 @@ async function getImages(q) {
     return error.status;
   }
 }
-getImages('ship').then(response => {
-  if (response.total === 0) {
-    Notiflix.Notify.warning(
-      'Sorry, there are no images matching your search query. Please try again.',
-    );
-  } else createPictureMarkup(response);
-});
 
 function createPictureMarkup(res) {
-  console.log(res.hits.[0]);
   res.hits.map(pic => {
     gallery.insertAdjacentHTML(
-      "beforeend",
+      'beforeend',
       `<div class="photo-card">
   <img src="${pic.webformatURL}" alt="${pic.tags}" loading="lazy" />
   <div class="info">
@@ -52,7 +60,7 @@ function createPictureMarkup(res) {
       <b>Downloads ${pic.downloads}</b>
     </p>
   </div>
-</div>`
-    )
+</div>`,
+    );
   });
 }

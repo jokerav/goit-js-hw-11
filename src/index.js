@@ -1,16 +1,22 @@
-import axios from 'axios';
 import Notiflix from 'notiflix';
+import ImageAPI from './imageAPI';
 import './sass/main.scss';
 const form = document.querySelector('#search-form');
 const searchInput = document.querySelector('[name=searchQuery]');
 const btnSearch = document.querySelector('.input-btn');
+const btnLoadMore = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
+const imageAPIservice = new ImageAPI();
 
 form.addEventListener('submit', onSearchPress);
+// btnLoadMore.addEventListener('click', onLoadMore);
+
 function onSearchPress(e) {
   e.preventDefault();
   const userInput = searchInput.value;
-  getImages(userInput).then(res => createPictureMarkup(res));
+  imageAPIservice.querry = userInput;
+  console.log(imageAPIservice);
+  imageAPIservice.getImages().then(res => createPictureMarkup(res));
 }
 
 // getImages('ship').then(response => {
@@ -20,26 +26,6 @@ function onSearchPress(e) {
 //     );
 //   } else createPictureMarkup(response);
 // });
-
-async function getImages(q) {
-  const SETTINGS = {
-    URL: 'https://pixabay.com/api/',
-    KEY: '25937561-4be56ebc67dabae3f5d5abc9c',
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: 'true',
-    per_page: 40,
-  };
-  const { URL, KEY, image_type, orientation, safesearch, per_page } = SETTINGS;
-  const searchRequest = `${URL}?key=${KEY}&q=${q}&${image_type}&${orientation}&${safesearch}&per_page=${per_page}`;
-
-  try {
-    const response = await axios.get(searchRequest);
-    return response.data;
-  } catch (error) {
-    return error.status;
-  }
-}
 
 function createPictureMarkup(res) {
   res.hits.map(pic => {

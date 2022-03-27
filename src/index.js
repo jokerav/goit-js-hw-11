@@ -3,7 +3,6 @@ import ImageAPI from './imageAPI';
 import './sass/main.scss';
 const form = document.querySelector('#search-form');
 const searchInput = document.querySelector('[name=searchQuery]');
-const btnSearch = document.querySelector('.input-btn');
 const btnLoadMore = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
 const imageAPIservice = new ImageAPI();
@@ -13,19 +12,24 @@ form.addEventListener('submit', onSearchPress);
 
 function onSearchPress(e) {
   e.preventDefault();
-  const userInput = searchInput.value;
-  imageAPIservice.querry = userInput;
-  console.log(imageAPIservice);
-  imageAPIservice.getImages().then(res => createPictureMarkup(res));
+  imageAPIservice.querry = searchInput.value;
+  if (imageAPIservice.querry === '') {
+    printError();
+  } else {
+    imageAPIservice.getImages().then(response => {
+      console.log(response);
+      if (response.total === 0) {
+        printError();
+      } else createPictureMarkup(response);
+    });
+  }
 }
 
-// getImages('ship').then(response => {
-//   if (response.total === 0) {
-//     Notiflix.Notify.warning(
-//       'Sorry, there are no images matching your search query. Please try again.',
-//     );
-//   } else createPictureMarkup(response);
-// });
+function printError() {
+  Notiflix.Notify.warning(
+    'Sorry, there are no images matching your search query. Please try again.',
+  );
+}
 
 function createPictureMarkup(res) {
   res.hits.map(pic => {

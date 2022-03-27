@@ -6,12 +6,11 @@ export default class ImageAPI {
       (this.image_type = 'photo'),
       (this.orientation = 'horizontal'),
       (this.safesearch = 'true'),
-      (this.per_page = 40),
+      (this.per_page = 10),
       (this.page = 1),
       (this.querry = '');
   }
   async getImages() {
-    //const { URL, KEY, image_type, orientation, safesearch, per_page, page } = SETTINGS;
     const searchRequest = `${this.URL}?key=${this.KEY}&q=${this.querry}&${this.image_type}&${this.orientation}&${this.safesearch}&per_page=${this.per_page}&page=${this.page}`;
     try {
       const response = await axios.get(searchRequest);

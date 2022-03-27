@@ -5,10 +5,11 @@ const form = document.querySelector('#search-form');
 const searchInput = document.querySelector('[name=searchQuery]');
 const btnLoadMore = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
-const imageAPIservice = new ImageAPI();
+let imageAPIservice = new ImageAPI();
 
 form.addEventListener('submit', onSearchPress);
-// btnLoadMore.addEventListener('click', onLoadMore);
+btnLoadMore.addEventListener('click', onLoadMore);
+btnLoadMore.classList.add('hidden');
 
 function onSearchPress(e) {
   e.preventDefault();
@@ -17,10 +18,12 @@ function onSearchPress(e) {
     printError();
   } else {
     imageAPIservice.getImages().then(response => {
-      console.log(response);
       if (response.total === 0) {
         printError();
-      } else createPictureMarkup(response);
+      } else {
+        createPictureMarkup(response);
+        btnLoadMore.classList.remove('hidden');
+      }
     });
   }
 }
@@ -53,5 +56,17 @@ function createPictureMarkup(res) {
   </div>
 </div>`,
     );
+  });
+}
+
+function onLoadMore(e) {
+  e.preventDefault;
+  imageAPIservice.page += 1;
+  imageAPIservice.getImages().then(response => {
+    if (response.total === 0) {
+      printError();
+    } else {
+      createPictureMarkup(response);
+    }
   });
 }

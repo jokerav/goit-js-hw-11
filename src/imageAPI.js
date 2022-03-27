@@ -6,7 +6,7 @@ export default class ImageAPI {
       (this.image_type = 'photo'),
       (this.orientation = 'horizontal'),
       (this.safesearch = 'true'),
-      (this.per_page = 10),
+      (this.per_page = 5),
       (this.page = 1),
       (this.querry = '');
   }
@@ -19,4 +19,10 @@ export default class ImageAPI {
       return error.status;
     }
   }
+  // get page() {
+  //   return this.page;
+  // }
+  // set page(newPage) {
+  //   this.page = newPage;
+  // }
 }

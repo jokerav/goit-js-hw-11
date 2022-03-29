@@ -39,3 +39,13 @@
 .hidden {
   display: none;
 }
+.gallery {
+  max-width: 90vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2vw;
+}
+.photo-card {
+  width: 350px;
+  // object-fit: cover;
+}

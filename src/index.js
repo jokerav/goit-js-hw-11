@@ -13,6 +13,7 @@ btnLoadMore.classList.add('hidden');
 
 function onSearchPress(e) {
   e.preventDefault();
+  btnLoadMore.classList.add('hidden');
   imageAPIservice.querry = searchInput.value;
   if (imageAPIservice.querry === '') {
     printError();
@@ -21,6 +22,7 @@ function onSearchPress(e) {
       if (response.total === 0) {
         printError();
       } else {
+        clearMarkup();
         createPictureMarkup(response);
         btnLoadMore.classList.remove('hidden');
       }
@@ -32,6 +34,9 @@ function printError() {
   Notiflix.Notify.warning(
     'Sorry, there are no images matching your search query. Please try again.',
   );
+}
+function clearMarkup() {
+  gallery.innerHTML = '';
 }
 
 function createPictureMarkup(res) {
@@ -62,10 +67,12 @@ function createPictureMarkup(res) {
 function onLoadMore(e) {
   e.preventDefault;
   imageAPIservice.page += 1;
+
   imageAPIservice.getImages().then(response => {
     if (response.total === 0) {
       printError();
     } else {
+      console.log(response);
       createPictureMarkup(response);
     }
   });

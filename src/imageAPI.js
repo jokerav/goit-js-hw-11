@@ -6,7 +6,7 @@ export default class ImageAPI {
       (this.image_type = 'photo'),
       (this.orientation = 'horizontal'),
       (this.safesearch = 'true'),
-      (this.per_page = 5),
+      (this.per_page = 40),
       (this.page = 1),
       (this.querry = '');
   }

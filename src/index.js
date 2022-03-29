@@ -14,7 +14,9 @@ btnLoadMore.classList.add('hidden');
 function onSearchPress(e) {
   e.preventDefault();
   btnLoadMore.classList.add('hidden');
+  imageAPIservice.page = 1;
   imageAPIservice.querry = searchInput.value;
+
   if (imageAPIservice.querry === '') {
     printError();
   } else {
@@ -23,6 +25,7 @@ function onSearchPress(e) {
         printError();
       } else {
         clearMarkup();
+        console.log(response);
         createPictureMarkup(response);
         btnLoadMore.classList.remove('hidden');
       }
@@ -30,16 +33,19 @@ function onSearchPress(e) {
   }
 }
 
-function printError() {
-  Notiflix.Notify.warning(
-    'Sorry, there are no images matching your search query. Please try again.',
-  );
-}
-function printNoMorePicture() {
-  Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
-}
-function clearMarkup() {
-  gallery.innerHTML = '';
+function onLoadMore(e) {
+  e.preventDefault;
+  imageAPIservice.getImages().then(response => {
+    if (response.total === 0) {
+      printError();
+    } else {
+      createPictureMarkup(response);
+    }
+
+    if (imageAPIservice.per_page * imageAPIservice.page >= response.total) {
+      printNoMorePicture();
+    }
+  });
 }
 
 function createPictureMarkup(res) {
@@ -67,20 +73,14 @@ function createPictureMarkup(res) {
   });
 }
 
-function onLoadMore(e) {
-  e.preventDefault;
-  imageAPIservice.page += 1;
-
-  imageAPIservice.getImages().then(response => {
-    if (response.total === 0) {
-      printError();
-    } else {
-      console.log(response);
-      createPictureMarkup(response);
-    }
-
-    if (imageAPIservice.per_page * imageAPIservice.page >= response.total) {
-      printNoMorePicture();
-    }
-  });
+function printError() {
+  Notiflix.Notify.warning(
+    'Sorry, there are no images matching your search query. Please try again.',
+  );
+}
+function printNoMorePicture() {
+  Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
+}
+function clearMarkup() {
+  gallery.innerHTML = '';
 }

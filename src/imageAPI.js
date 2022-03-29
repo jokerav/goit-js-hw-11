@@ -14,6 +14,7 @@ export default class ImageAPI {
     const searchRequest = `${this.URL}?key=${this.KEY}&q=${this.querry}&${this.image_type}&${this.orientation}&${this.safesearch}&per_page=${this.per_page}&page=${this.page}`;
     try {
       const response = await axios.get(searchRequest);
+      this.page += 1;
       return response.data;
     } catch (error) {
       return error.status;

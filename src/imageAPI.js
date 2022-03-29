@@ -20,6 +20,9 @@ export default class ImageAPI {
       return error.status;
     }
   }
+  resetPage() {
+    this.page = 1;
+  }
   // get page() {
   //   return this.page;
   // }

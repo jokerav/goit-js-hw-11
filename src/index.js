@@ -35,6 +35,9 @@ function printError() {
     'Sorry, there are no images matching your search query. Please try again.',
   );
 }
+function printNoMorePicture() {
+  Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
+}
 function clearMarkup() {
   gallery.innerHTML = '';
 }
@@ -74,6 +77,10 @@ function onLoadMore(e) {
     } else {
       console.log(response);
       createPictureMarkup(response);
+    }
+
+    if (imageAPIservice.per_page * imageAPIservice.page >= response.total) {
+      printNoMorePicture();
     }
   });
 }

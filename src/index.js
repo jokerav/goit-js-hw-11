@@ -31,6 +31,7 @@ function onLoadMore(e) {
     if (imageAPIservice.per_page * imageAPIservice.page >= response.total) {
       printNoMorePicture();
     }
+    Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
   });
 }
 function appendMurkup(pic) {

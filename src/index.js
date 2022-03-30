@@ -45,7 +45,7 @@ function createPictureMarkup(res) {
     gallery.insertAdjacentHTML(
       'beforeend',
       `<div class="photo-card">
-  <img src="${pic.webformatURL}" alt="${pic.tags}" loading="lazy" />
+  <img src="${pic.webformatURL}" alt="${pic.tags}" height='300px' loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes ${pic.likes}</b>

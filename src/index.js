@@ -28,7 +28,7 @@ function onLoadMore(e) {
   e.preventDefault;
   imageAPIservice.getImages().then(response => {
     appendMurkup(response);
-    if (imageAPIservice.per_page * imageAPIservice.page >= response.total) {
+    if (imageAPIservice.per_page * imageAPIservice.page - 1 >= response.total) {
       printNoMorePicture();
     }
     Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);

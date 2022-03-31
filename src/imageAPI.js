@@ -17,7 +17,7 @@ export default class ImageAPI {
       this.page += 1;
       return response.data;
     } catch (error) {
-      return error.request;
+      return error.toJSON();
     }
   }
   resetPage() {
